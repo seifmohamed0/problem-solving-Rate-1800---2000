@@ -1,0 +1,30 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+int n , arr[100005] ;
+int  dp[100009][60][2], vis[100009][60][2];
+int solve(int idx, int mxn, int flag)
+{
+    if(idx==n){
+        if(!flag)
+            return -1e9;
+        return (mxn-30)*-1;
+    }
+    int &ans=dp[idx][mxn][flag];
+    if(vis[idx][mxn][flag])
+        return ans;
+    vis[idx][mxn][flag]=true;
+    int curr=max(mxn,arr[idx]+30);
+    if(flag)
+        ans=max(arr[idx]-(curr-30),arr[idx]+solve(idx+1,curr,1));
+    else
+        ans=max(solve(idx+1,mxn,0),arr[idx]+solve(idx+1,arr[idx]+30,1));
+    return ans;
+}
+int main(){
+	cin>>n;
+	for(int i = 0; i < n ; i++){
+		cin>>arr[i];
+	}
+	cout<<solve(0,0,0);
+	return 0;
+}  
