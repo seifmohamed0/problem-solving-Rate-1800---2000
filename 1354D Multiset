@@ -1,0 +1,76 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn = 1e6 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299;
+int n,q;
+int tree[mxn * 4];
+
+void update(int p , int l , int r , int pos ){
+	if(l == r){
+		tree[p]++;
+		return;
+	}
+	int mid = (l + r) / 2;
+	if(mid >= pos){
+		update(2 * p , l , mid , pos );
+	}else{
+		update(2 * p + 1 , mid + 1 , r , pos);
+	}
+	tree[p] = tree[2 * p] + tree[2 * p + 1];
+	return;
+}
+int get(int p , int l , int r ){
+	if(l == r)return l;
+	int mid = (l + r) / 2;
+	if(tree[2*p] > 0){
+		return get(2 * p , l , mid );
+	}
+	return get(2 * p + 1 , mid + 1 , r);
+}
+void update2(int p , int l , int r , int pos){
+	if(l == r){
+		tree[p]--;
+		return;
+	}
+	int mid = (l + r) / 2;
+	if(tree[2 * p] >= pos){
+		update2(2 * p , l , mid , pos);
+	}else{
+		update2(2 * p + 1 , mid + 1 , r , pos - tree[2 * p]);
+	}
+	tree[p]--;
+	return;
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();			
+	cin>>n>>q;
+	for(int i = 0 ; i < n ; i++){
+		int x;
+		cin>>x;
+		update(1 , 1 , n   , x  );
+	}
+	while(q--){
+		int x;
+		cin>>x;
+		if(x>0){
+			update(1,1,n,x );
+		}else{
+			x = abs(x);
+			update2(1,1,n , x);
+		}
+	}
+	if(tree[1] == 0)cout<<0<<endl;
+	else cout<<get(1,1,n);
+	return 0;
+}
+/*
+ 01011
+ *****11100
+ 
+ */ 
+ 
