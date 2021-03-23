@@ -1,0 +1,95 @@
+#include <bits/stdc++.h> 
+#define ll long long 
+using namespace std;
+const int  mxn = 2e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , mod2 = 998244353 , inf = 0x3f;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+bool vis[mxn];
+ll x , k ,y;
+vector<int>org , tmp;
+int n , m;
+bool valid_border(int l , int r , int mn){
+	if(l > 0){
+		if(org[l - 1] > mn)
+			return true;
+	}
+	if(r + 1 < n)
+		if(org[r + 1] > mn)
+			return true;
+			
+	return false;
+}
+ll solve(int l , int r , int mn ){
+	int siz =  r - l + 1;
+	if(siz <= 0)return 0;
+	ll ret = 0;
+	if(valid_border(l , r , mn)){
+		ll mm = siz % k;
+		ret += mm * y;
+		siz -= mm ;
+		ret += min(y * siz , siz / k * x);
+	}else{
+		if(siz > k){
+			ll can = siz - k;
+			ret += min(can * y , (can / k * x )+((can % k )* y) );
+			ret += x;
+		}else if(siz == k){
+			ret += x;
+		}else{
+			cout<<-1;
+			exit(0);
+		}
+	}
+	return ret;
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n>>m;
+	org.resize(n);
+	tmp.resize(m);
+	cin>>x>>k>>y;
+	for(int i = 0; i < n ; i++)
+		cin>>org[i];
+	for(int i = 0; i < m ; i++){
+		cin>>tmp[i];
+		vis[tmp[i]] = true;
+	}
+	vector<int>vi , mn , vi2;
+	vector<array<int , 2 >>b;
+	int cnt = 0 , mx = 0 , l = 0 , r = 0;
+	for(int i= 0; i <n ; i++){
+		if(vis[org[i]]){
+			if(cnt){
+				b.push_back({l , r});
+				vi.push_back(cnt);
+				mn.push_back(mx);
+			}
+				cnt =0;
+				l = r = i + 1;
+				mx = 0;
+				vi2.push_back(org[i]);
+		}else{
+			cnt++;
+			mx = max(mx , org[i]);
+			r = i;
+		}
+	}		
+	if(cnt){
+		vi.push_back(cnt);
+		mn.push_back(mx);
+		b.push_back({l,r});
+	}
+	ll ans = 0;
+	for(int i= 0 ; i< m ; i++){
+		if(vi2[i] != tmp[i])
+			return cout<<-1,0;
+	}
+	for(int i =0 ; i < (int)vi.size() ; i++){
+		ans += solve(b[i][0] , b[i][1] , mn[i]);
+	}
+	cout<<ans;
+	return 0;
+}	
