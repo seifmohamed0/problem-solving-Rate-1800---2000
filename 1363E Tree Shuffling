@@ -1,0 +1,51 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 2e5 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 ;
+void seif(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int a[mxn] , b[mxn] , c[mxn] , n , d[mxn];
+vector<int>vi[mxn];
+ll out = 0;
+array<int,2> dfs(int node ,int par){
+	array<int,2>ret = {0 , 0};
+	if(b[node] != c[node]){
+		ret[b[node]]++;
+	}
+	d[node] = a[node];
+	if(par != -1){
+		d[node] = min(d[node] , d[par]);
+	}
+	for(auto it : vi[node]){
+		if(it == par)continue;
+		array<int,2>p = dfs(it , node);
+		ret[0] += p[0]; ret[1] += p[1];
+	}
+	int mn = min(ret[0] , ret[1]);
+	ret[0] -= mn;
+	ret[1] -= mn;
+	out += 2ll * mn * d[node];
+	return ret;
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	seif();
+	cin>>n;
+	for(int i = 1 ; i <= n ; i++){
+		cin>>a[i]>>b[i]>>c[i];
+	}
+	for(int i = 1 ; i<= n - 1 ; i++){
+		int u , v;
+		cin>>u>>v;
+		vi[u].push_back(v);
+		vi[v].push_back(u);
+	}
+	array<int,2> cur = dfs(1 , -1);
+	if(cur[0] || cur[1])cout<<-1;
+	else cout<<out;
+	return 0; 
+}
+ 
