@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 1e3 + 8 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 , eps = 1e-5;
+#define Yalla3lshanMst3gla ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	Yalla3lshanMst3gla
+	ll n ;
+	cin>>n;
+	array<ll,3>a,b;
+	for(int i = 0; i< 3 ; i++)
+		cin>>a[i];
+	for(int i = 0; i < 3 ; i++)
+		cin>>b[i];
+	ll mx = min(a[2], b[0]) 
+	+ min(a[1], b[2]) 
+	+ min(a[0], b[1]);
+	ll mn = 0;
+	mn = max(mn , a[2] - (b[2] + b[1]));
+	mn = max(mn , a[0] - (b[0] + b[2]));
+	mn = max(mn , a[1] - (b[0] + b[1]));
+	cout<<mn<<" "<<mx;
+	return 0;
+}	
+
+	
+	
