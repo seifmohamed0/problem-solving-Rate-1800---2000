@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+#include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/rope>
+using namespace std;
+using namespace __gnu_pbds;
+using namespace __gnu_cxx;
+template<class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+
+using namespace std;
+#define go ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define ll long long
+const int mxn = 1e3 + 5 , mod = 1e9 + 7 , MOD = 1e9 + 7 , mod2 = 998244353;
+int a[mxn][mxn] , b[mxn][mxn] , n;
+bool solve(){
+	for(int i = 0; i < n ; i++){
+		if(a[0][i] != b[0][i]){
+			for(int j = 0; j < n; j++){
+				a[j][i] ^= 1;
+			}
+		}
+	}
+	for(int i = 0; i < n ; i++){
+		int curr = (a[i][0] ^ b[i][0]);
+		for(int j = 0; j < n ; j++){
+			if(curr != (a[i][j] ^ b[i][j]))
+				return false;
+		}
+	}
+	return true;
+}
+void bingo(){
+	cin>>n;
+	for(int i = 0; i < n ; i++){
+		for(int j = 0; j < n ; j++){
+			char c ;
+			cin>>c;
+			a[i][j] = c - '0';
+		}
+	}
+	for(int i = 0; i < n ; i++){
+		for(int j = 0; j < n ; j++){
+			char c ; cin>>c;
+			b[i][j] = c - '0';
+		}
+	}
+	for(int k = 0; k < 2 ; k++){
+		if(solve()){
+			cout<<"YES"<<'\n';
+			return ;
+		}
+	}
+	cout<<"NO"<<'\n';
+}
+int main() {
+	go
+#ifdef LOCAL
+	freopen("input.in", "rt", stdin);
+//	freopen("output.in", "wt", stdout);
+#endif
+	int t = 1;
+	cin>>t;
+	while(t--){
+		bingo();
+	}
+	return 0;
+}
