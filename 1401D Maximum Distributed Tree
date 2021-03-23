@@ -1,0 +1,65 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 1e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 ;
+void seif(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int n ;
+vector<int>vi[mxn];
+vector<ll>arr;
+ll dfs(int node , int par){
+	ll ret = 1;
+	for(auto it : vi[node]){
+		if(it != par){
+			ll curr= dfs(it , node);
+			ret += curr;
+			arr.push_back((n - curr ) *(curr));
+		}
+	}
+	return ret;
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	seif();
+	int t ;
+	cin>>t;
+	while(t--){
+		cin>>n;
+		for(int i = 1 ; i <= n ;i++){
+			vi[i].clear();
+		}
+		for(int i = 0; i < n - 1 ; i++){
+			int u , v;
+			cin>>u>>v;
+			vi[u].push_back(v);
+			vi[v].push_back(u);
+		}
+		dfs(1 , -1);
+		sort(arr.begin() , arr.end());
+		for(int i= 0 ; i <arr.size() ; i++)
+			arr[i] %= mod;
+		int m;
+		cin>>m;
+		vector<ll>v(m);
+		for(int i =0 ; i < m ; i++){
+			cin>>v[i];
+		}
+		while((int)v.size() < arr.size())
+			v.push_back(1);
+		sort(v.begin() , v.end());
+        for (int i = m - 2; i >= n - 2 ; i--)
+            v[i] = ( v[i] * v[i+1] ) % mod;
+		ll out = 0;
+		for(int i = 0; i < n - 1; i++){
+			out = (out + (v[i] * arr[i]) % mod)%mod;
+		}
+		cout<<out<<endl;
+		arr.clear();
+	}
+	return 0;
+}
+
+	
