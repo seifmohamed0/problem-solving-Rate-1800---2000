@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 1e6 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 ;
+void seif(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int y[mxn];
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	seif();
+	int n, m;
+	cin>>n>>m;
+	vector<array<int,2>> r(n), s(m);
+	for(int i = 0 ; i < n ; i++)
+		cin>>r[i][0]>>r[i][1];
+	for(int i=  0 ; i <  m ; i++)
+		cin>>s[i][0]>>s[i][1];
+	for (int i = 0 ; i < n ; i++) {
+		for(int j = 0 ; j < m ;j++) {
+			if(r[i][0] > s[j][0])
+				continue;
+			y[s[j][0] - r[i][0]] = max(y[s[j][0] - r[i][0]], s[j][1] - r[i][1] + 1);
+		}
+	}
+	ll out = 1e18;
+	for (int i = 1e6; i >= 0; i--){
+		y[i] = max(y[i], y[i + 1]);
+		out = min(out,(ll) i + y[i]);
+	}
+	cout<<out;
+	return 0; 
+	
+}
+ 
