@@ -1,0 +1,47 @@
+    #include <bits/stdc++.h>
+    #include<ext/pb_ds/tree_policy.hpp>
+    #include<ext/pb_ds/assoc_container.hpp>
+    #include<ext/rope>
+    using namespace std;
+    using namespace __gnu_pbds;
+    using namespace __gnu_cxx;
+    template<class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+     
+    using namespace std;
+    #define go ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+    #define ll long long
+    const int mxn = 2e5 + 5 , mod = 1e9 + 7 , MOD = 1e9 + 7 , mod2 = 998244353;
+    int n ;
+    int dp[mxn] , mp[mxn];
+    void bingo(){
+    	memset(dp , 0 , sizeof(dp));
+    	memset(mp , 0 , sizeof(mp));
+    	cin>>n;
+    	for(int i = 0; i < n ; i++){
+    		int x ; cin>>x;
+    		mp[x]++;
+    	}
+    	for(int i = 1 ;i < mxn ; i++){
+    		 dp[i] += mp[i];
+    		 for(int j = i + i ;  j < mxn ; j += i){
+    			 dp[j] = max(dp[j] , dp[i]);
+    		 }
+    	}
+    	int out = 0;
+    	for(int i = 1 ;i < mxn ; i++)
+    		out = max(out , dp[i]);
+    	cout<<n - out<<'\n';
+    }
+    int main() {
+    	go
+    #ifdef LOCAL
+    	freopen("input.in", "rt", stdin);
+    //	freopen("output.in", "wt", stdout);
+    #endif
+    	int t = 1;
+    	cin>>t;
+    	while(t--){
+    		bingo();
+    	}
+    	return 0;
+    }
