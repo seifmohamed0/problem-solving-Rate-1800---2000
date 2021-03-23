@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+using namespace std;
+const long long mxn = 2e5 + 7 , inf = 0x3f , mod = 1e9 + 7;
+
+int main(){
+	int t ;
+	cin>>t;
+	while(t--){
+		string s ;
+		cin>>s;
+		int n ; 
+		cin>>n;
+		vector<int>b(n);
+		int cnt = 0; 
+		vector<int>zeros;
+		for(int i  = 0; i < n ; i++){
+			cin>>b[i];
+			if(!b[i]){
+				cnt++;
+				zeros.push_back(i);
+			}
+		}
+		map<char , int>mp;
+		for(int i = 0; i <(int)s.size() ; i++)
+			mp[s[i]]++;
+		char curr = 'z';
+		int done = 0;
+		string ans = "";
+		for(int i = 0 ; i < n ; i++)ans+='.';
+		while(done != n){
+			while(curr > 'a' && mp[curr] < cnt)
+				curr--;
+			for(int i = 0; i < cnt ; i++){
+				ans[zeros[i]] = curr;
+				done++;
+				b[zeros[i]] = -1;
+			}
+			curr--;
+			cnt = 0;
+			for(int i = 0; i < n ;i++){
+				if(b[i] == -1)continue;
+				for(auto it : zeros){
+					b[i] -= abs(it - i);
+				}
+			}
+			zeros.clear();
+			for(int i = 0; i < n ; i++)
+				if(!b[i]){
+					cnt++;
+					zeros.push_back(i);
+				}
+			if(!cnt)break;
+		}
+		cout<<ans<<endl;
+	}
+	return 0;
+}
