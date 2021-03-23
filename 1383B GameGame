@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+#include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/rope>
+using namespace std;
+//usin	g namespace __gnu_pbds;
+//using namespace __gnu_cxx;
+//template<class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+
+using namespace std;
+#define go ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define ll long long
+const int mxn = 1e5 + 5 , mod = 1e9 + 7 , MOD = 1e9 + 7 , mod2 = 998244353;
+
+void bingo(){
+	int n ;
+	cin>>n;
+	vector<int>vi(n);
+	int xo = 0;
+	for(int i= 0 ;i < n ; i++){
+		cin>>vi[i];
+		xo ^= vi[i];
+	}
+	for(int i = 30 ; i >= 0 ; i--){
+		if(xo >> i & 1){
+			int ones = 0;
+			for(auto it : vi){
+				ones += (it >> i & 1);
+			}
+			int zeros= n - ones;
+			if(ones % 4 == 3 && zeros%2 == 0){
+				cout<<"LOSE"<<endl;
+			}else{
+				cout<<"WIN"<<endl;
+			}return;
+		}
+	}
+	cout<<"DRAW"<<endl;
+}
+int main() {
+	go
+#ifdef LOCAL
+	freopen("input.in", "rt", stdin);
+//	freopen("output.in", "wt", stdout);
+#endif
+	int t = 1;
+	cin>>t;
+	while(t--){
+		bingo();
+	}
+	return 0;
+}
