@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+#define ll long long 
+using namespace std;
+const int  mxn = 4e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int n , k;
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	int t ;
+	cin>>t;
+	while(t--){
+        int lst=-1;
+        bool flag1 = false , flag2 = false;
+        cin>>n>>k;
+        for(int i=0 , x;i<n;i++){
+            cin>>x;
+            if(x==k) flag1 = true;
+            if(x>=k){
+				if(lst == -1){
+					lst = i;	
+				}
+                else if(i-lst<3) 
+                flag2 = true;
+                lst=i;
+            }
+        }
+		if( (flag1&&n == 1) || (flag1 && flag2))
+			cout<<"yes"<<endl;
+		else cout<<"no"<<endl;
+	}
+	return 0;	
+}
+ 
