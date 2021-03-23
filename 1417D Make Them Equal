@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 3e5 + 8 , N = 2e5 + 5 ,MOD = 1e9 + 7 ,  mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 , eps = 1e-5;
+#define Yalla3lshanMst3gla ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	Yalla3lshanMst3gla
+    int t; 
+    cin>>t;
+    while(t--){
+		int n;
+		cin>>n;
+		ll sum = 0;
+		vector<int>vi(n + 1);
+		for(int i =  1 ;i <= n ; i++){
+			cin>>vi[i];
+			sum += vi[i];
+		}
+		if(sum % n){
+			cout<<-1<<endl;
+			continue;
+		}
+		cout<<n*3-3<<endl;
+		for(int i = 2 ; i <= n ; i++){
+			int m = i - vi[i] % i;
+			m%=i;
+			cout<<1<<" "<<i<<" "<<m<<endl;
+			cout<<i<<" "<<1<<" "<<(vi[i] + m)/i<<endl;
+		}
+		for(int i = 2 ; i <= n ; i++){
+			cout<<1<<" "<<i<<" "<<sum / n<<endl;
+		}
+	}
+	return 0;
+}	
+
+	
