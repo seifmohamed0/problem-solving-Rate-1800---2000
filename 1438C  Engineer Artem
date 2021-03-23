@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 2e5 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 ;
+void seif(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int grid[105][105];
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	seif();
+	int t ;
+	cin>>t;
+	while(t--){
+		int n , m;
+		cin>>n>>m;
+		bool z = true , sz = true;
+		for(int i = 0 ; i < n ; i++){
+			if(sz == true){
+				z = true;
+			}else{
+				z = false;
+			}
+			sz ^= 1;
+			for(int j = 0 ; j < m; j++){
+				int x ;
+				cin>>x;
+				if((z && x & 1) || (!z && x % 2 == 0))
+					x++;
+				cout<<x<<" ";
+				z^= 1;
+			}
+			cout<<endl;
+		}
+	}
+	return 0; 
+}
+ 
