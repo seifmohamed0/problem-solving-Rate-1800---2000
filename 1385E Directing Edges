@@ -1,0 +1,64 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;const int  mxn = 2e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+vector<vector<int>>vi;
+int n , m ;
+bool vis[mxn];
+vector<int>nds;
+int en[mxn];
+void dfs(int node){
+	vis[node] = true;
+	for(auto it : vi[node])
+		if(!vis[it])dfs(it);
+	nds.push_back(node);
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();			
+	int t ;
+	cin>>t;
+	while(t--){
+		memset(vis , false , sizeof(vis));
+		nds.clear();
+		cin>>n>>m;
+		vector<array<int,2>>v;
+		vi = vector<vector<int>>(n + 1);
+		for(int i = 0 ; i < m ;i++){
+			int state , u , vv;
+			cin>>state>>u>>vv;
+			v.push_back({u , vv});
+			if(state)
+				vi[u].push_back(vv);
+		}
+		for(int i = 1 ; i <= n ; i++){
+			if(!vis[i])
+				dfs(i);
+		}
+		reverse(nds.begin() , nds.end());
+		for(int i = 0 ; i < n ; i++){
+			en[nds[i]] = i + 1;
+		}
+		bool flag = true;
+		for(int i=  1 ; i<= n  ;i++)
+			for(auto it : vi[i])
+				if(en[i] > en[it])
+					flag = false;
+		if(flag){
+			cout<<"YES"<<endl;
+			for(int i = 0 ; i < m ; i++){
+				int u = v[i][0] , vv = v[i][1];
+				if(en[u] < en[vv])
+					cout<<u<<" "<<vv<<endl;
+				else
+					cout<<vv<<" "<<u<<endl;
+			}
+		}else{
+			cout<<"NO"<<endl;
+		}
+	}
+	return 0;
+}
