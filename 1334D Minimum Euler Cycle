@@ -1,0 +1,45 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int main() 
+{
+	int t;cin>>t;
+	while(t--)
+	{
+		long long n , l , r;
+		cin>>n>>l>>r;
+		int cur=1;
+		l--; r--;
+		for(int i=1;i<=n;i++)
+		{
+			int pp=2*(n-i);
+			if(l>=pp)
+			{
+				l-=pp; r-=pp;
+				cur++;
+			}
+			else break;
+		}
+		int cnt=cur+1;
+		for(int i=0;i<=r;i++)
+		{
+			int x;
+			if(cur==n+1||cnt>n) cur=1;
+			if(i%2==0)
+				x=cur;
+			else
+			{
+				x=cnt;
+				cnt++;
+				if(cnt>n)
+				{
+					cur++; cnt=cur+1;
+				}
+			}
+			if(i>=l)
+				cout<<x<<" ";
+		}
+		cout<<endl;
+	}
+    return 0;
+} 
+ 
