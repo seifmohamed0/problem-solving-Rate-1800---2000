@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+char grid[55][55];
+int row[55] , col[55];
+int main(){
+	int t ;
+	cin>>t;
+	while(t--){
+		int n , m  , a , b;
+		cin>>n>>m>>a>>b;
+		if(n*a != m*b){
+			cout<<"NO"<<endl;
+			continue;
+		}
+		for(int i = 0; i < n ; i++){
+			row[i] = 0;
+			for(int j = 0; j < m ; j++){
+				grid[i][j] = '0';
+			}
+		}
+		for(int i = 0 ; i < m ; i++)	
+			col[i] = 0;
+		for(int i = 0 , p = 0; i < n ; i++){
+			for(int j = 0; j < a ; j++){
+				grid[i][p++] = '1';
+				row[i]++;
+				col[p-1]++;
+				p%=m;
+			}
+		}
+		bool found = true;
+		
+		for(int i = 0; i < n ; i++)
+			if(row[i]!=a)found = false;
+		for(int i = 0; i < m ;i++)
+			if(col[i]!=b)found = false;
+		if(found){
+			cout<<"YES"<<endl;
+			for(int i = 0; i < n ; i++){
+				for(int j = 0; j < m ; j++)
+					cout<<grid[i][j];
+				cout<<endl;
+			}
+		}else{
+			cout<<"NO"<<endl;
+		}
+	}
+	return 0;
+}  
+
+/*
+ 110000
+ 001100
+ 000011
+ */
