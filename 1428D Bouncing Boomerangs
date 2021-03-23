@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+#include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/rope>
+using namespace std;
+//usin	g namespace __gnu_pbds;
+//using namespace __gnu_cxx;
+//template<class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+
+using namespace std;
+#define go ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define ll long long
+const int mxn = 2e5 + 5 , mod = 1e9 + 7 , MOD = 1e9 + 7 , mod2 = 998244353;
+vector<int>vi[3];
+int n ;
+vector<array<int,2>>out;
+void bingo(){
+	cin>>n;
+	for(int i = 1 ; i <= n ; i++){
+		int x;
+		cin>>x;
+		if(x == 1 && (int)vi[0].size()){
+			out.push_back({vi[0].back() , i});
+			vi[0].pop_back();
+		}else if(x){
+			if((int)vi[1].size()){
+				out.push_back({vi[1].back() , i});
+				vi[1].pop_back();
+			}
+			out.push_back({i , i});
+		}
+		if(x == 2){
+			vi[0].push_back(i);
+		}else if(x == 3){
+			vi[1].push_back(i);
+		}
+	}
+	if(vi[0].size() ||vi[1].size()){
+		cout<<-1;
+		return;
+	}
+	cout<<out.size()<<endl;
+	for(auto it : out){
+		cout<<it[0]<<" "<<it[1]<<endl;
+	}
+}
+int main() {
+	go
+#ifdef LOCAL
+	freopen("input.in", "rt", stdin);
+//	freopen("output.in", "wt", stdout);
+#endif
+	int t = 1;
+	//cin>>t;
+	while(t--){
+		bingo();
+	}
+	return 0;
+}
