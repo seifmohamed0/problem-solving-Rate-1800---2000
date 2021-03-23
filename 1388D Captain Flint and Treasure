@@ -1,0 +1,50 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn =2e5 + 	5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 ;
+ll n , t[mxn] , val[mxn] ;
+map<int,int>mp;
+bitset<mxn>vis;
+vector<int>top , vi;
+void topolgical_sort(int node){
+	vis[node] = true;
+	if(t[node] != -1 && ! vis[t[node]])
+		topolgical_sort(t[node]);
+	top.push_back(node);
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n;
+	for(int i = 1 ; i <= n ; i++)
+		cin>>val[i];
+	for(int i = 1 ; i <= n ; i++)
+		cin>>t[i];
+	for(int i = 1 ; i <= n ; i++){
+		if(!vis[i])topolgical_sort(i);
+	}
+	reverse(top.begin() , top.end());
+	ll sum = 0;
+	for(int i = 0 ; i < n ; i++){
+		sum += val[top[i]] ;
+		if(val[top[i]] < 0){
+			mp[top[i]] = -1 ;
+			vi.push_back(top[i]) ;
+		}
+		else if(t[top[i]] != -1)
+			val[t[top[i]]] += val[top[i]];
+	}
+	cout<<sum<<endl;
+	for(int i = 0 ; i < n ; ++i){
+		if(mp[top[i]] != -1)
+			cout<<top[i]<<" " ;
+	}
+	reverse(vi.begin() , vi.end()) ;
+	for(auto it : vi)
+		cout<<it<<" ";
+	return 0;
+}
