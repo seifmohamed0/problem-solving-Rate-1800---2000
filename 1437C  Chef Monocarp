@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define Yalla3lshanMst3gla ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define ll long long
+const int mxn = 2e2 + 5 , mod = 1e9 + 7 , MOD = 1e9 + 7 , mod2 = 998244353;
+int dp[mxn][mxn * 2] , n;
+vector<int>vi;
+ll solve(int idx , int curr){
+	if(idx == n)return 0;
+	if(curr == 400)return 1e9;
+	if(dp[idx][curr]!=-1)return dp[idx][curr];
+	ll ret = min(solve(idx + 1 , curr + 1) + abs(curr - vi[idx]) , solve(idx , curr + 1));
+	return dp[idx][curr] = ret;
+}
+void shof_anta_ray7_fen(){
+	cin>>n;
+	vi.resize(n);
+	for(auto &it : vi)
+		cin>>it;
+	sort(vi.begin() , vi.end());
+	memset(dp , -1 ,sizeof(dp));
+	cout<<solve(0 , 1)<<endl;
+}
+int main() {
+	Yalla3lshanMst3gla
+#ifdef LOCAL
+	freopen("input.in", "rt", stdin);
+//	freopen("output.in", "wt", stdout);
+#endif
+	int t = 1;
+	cin>>t;
+	while(t--){
+		shof_anta_ray7_fen();
+	}
+	return 0;
+}
