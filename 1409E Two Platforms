@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+
+const int  mxn = 1e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 , Sqrt = 317 ;
+void seif(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	seif();
+	int t ;
+	cin>>t;
+	while(t--){
+		int n , k;
+		cin>>n>>k;
+		vector<int>x(n + 1);
+		for(int i = 1 ; i <= n ; i++){
+			cin>>x[i];
+		}
+		for(int i = 1 , y ; i <= n ; i++)
+			cin>>y;
+		sort(x.begin() , x.end());
+		vector<int>d(n + 1);
+		int out = 0;
+		for(int i = 1 ; i <= n ; i++){
+			int pl = lower_bound(x.begin() + 1 , x.end() , x[i] - k) - x.begin();
+			int p = i - pl + 1;
+			p += d[max(pl - 1 ,  0)];
+			out = max(out , p);
+			d[i] = max(d[i - 1] , i - pl + 1);
+		}
+		cout<<out<<endl;
+	}
+	return 0; 
+}
+ 
