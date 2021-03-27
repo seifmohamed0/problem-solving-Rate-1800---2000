@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+#include <ext/numeric>
+
+#include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/rope>
+using namespace std;
+using namespace __gnu_pbds;
+using namespace __gnu_cxx;
+template<class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+
+using namespace std;
+#define go ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define ll long long
+typedef vector<vector<int>>vvi;
+typedef complex<long double>Point;
+const double Pi = acos(-1.0) , eps = 1e-8;
+#define X real()
+#define Y imag()
+#define Angle(v) (atan2((v).Y , (v).X))
+#define Length(v) ((long double)hypot((v).Y , (v).X))
+#define Lengthsqr(v) (dot((v) , (v)))
+const int mxn = 2e5+ 5 , mod = 1e9 + 7, MOD = 1e9 + 7 , mod2 = 998244353;
+
+bool is_right(int r , int c){
+	return (r + c) & 1;
+}
+bool is_left(int r , int c){
+	return !is_right(r , c);
+}
+int R , C ;
+int dist(int r ,int c){
+	if(R - C == r - c){
+		return is_right(R , C) ? 0 : r - R;
+	}
+	r -= R - 1;
+	c -= C - 1;
+	if(is_left(R , C)){
+		return (r - c) / 2;
+	}else{
+		return (r -  c + 1) / 2;
+	}
+}
+void bingo(){
+	R = C = 1;
+	int n ;
+	cin>>n;
+	vector<array<int,2>>vi(n);
+	for(int i = 0; i < n ; i++)
+		cin>>vi[i][0];
+	for(int i = 0 ;i < n;  i++)
+		cin>>vi[i][1];
+	sort(vi.begin(),vi.end());
+	ll out = 0;
+	for(int i = 0 ; i < n ; i++){
+		out += dist(vi[i][0] , vi[i][1]);
+		R = vi[i][0] ;
+		C = vi[i][1];
+	}
+	cout<<out<<'\n';
+}
+int main() {
+	go
+#ifdef LOCAL
+	freopen("input.in", "rt", stdin);
+//	freopen("output.out", "wt", stdout);
+#endif
+	//freopen("card.in", "rt", stdin);
+	int t = 1;
+	cin>>t;
+	while(t--){
+		bingo();
+	}
+	return 0;
+}
