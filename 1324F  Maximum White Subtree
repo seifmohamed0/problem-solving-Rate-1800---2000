@@ -1,0 +1,44 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn =2e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 ;
+int n , colors[mxn] ;
+vector<int>vi[mxn];
+int dp[mxn] , dp2[mxn];
+void dfs(int node , int par){
+	dp[node] = colors[node] ? 1 : -1;
+	for(auto it : vi[node]){
+		if(it == par)continue;
+		dfs(it , node);
+		dp[node] = max(dp[node] , dp[node] + dp[it]);
+	}
+}
+void dfs2(int node , int par){
+	if(par != -1)dp2[node] = max({0 , dp[par] + dp2[par] - max(0 , dp[node])});
+	for(auto it : vi[node]){
+		if(it == par)continue;
+		dfs2(it , node);
+	}
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n;
+	for(int i = 1 ; i <= n ; i++)
+		cin>>colors[i];
+	for(int i=  0 ; i < n - 1 ; i++){
+		int u , v;
+		cin>>u>>v;
+		vi[u].push_back(v);
+		vi[v].push_back(u);
+	}
+	dfs(1 , -1);
+	dfs2(1 , -1);
+	for(int i= 1  ;i <= n ; i++)
+		cout<<dp[i] + dp2[i]<<" ";	
+	return 0;
+} Maximum White Subtree
