@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn =1e6 + 	5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 ;
+int n , m , p , h[mxn], g[mxn];
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n>>m>>p;
+	bool flag = false;
+	ll f = 0 , s = 0;
+	for(int i = 0 ; i < n ; i++){
+		cin>>h[i];
+		if(!flag && h[i] % p){
+			flag = true;
+			f = i;
+		}
+	}
+	flag = false;
+	for(int i = 0; i < m ; i++){
+		cin>>g[i];
+		if(!flag && g[i] % p){
+			flag = true;
+			s = i;
+		}
+	}
+	cout<<f + s;
+	return 0;
+}
+ 
