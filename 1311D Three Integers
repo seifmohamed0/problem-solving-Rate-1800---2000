@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long p , pp;
+int main(){
+	int t ;
+	cin>>t;
+	while(t--){
+		long long a , b , c;
+		cin>>a>>b>>c;
+		long long diff = 1e18 , fnum ,snum , tnum;
+		for(int i = 1; i <= 20000 ; i++){
+			for(int j = i ; j <= 20000 ; j+=i){
+				for(int k = j ; k <=20000 ; k+=j){
+					long long curr = abs(a-i) + abs(b-j) + abs(c-k);
+					if(curr < diff){
+						diff = curr;
+						fnum = i , snum = j , tnum = k;
+					}
+				}
+			}
+		}
+		cout<<diff<<endl<<fnum<<" "<<snum<<" "<<tnum<<endl;
+	}
+	return 0;
+}
+ 
