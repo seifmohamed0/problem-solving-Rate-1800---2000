@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int arr[70];
+int main() 
+{ 
+    int t ;
+    cin>>t;
+    while(t--){
+        memset(arr,0,sizeof(arr));
+        long long sum = 0;
+        long long n , m;
+        cin>>n>>m;
+        for(int i = 0; i < m ; i++){
+            long long x ; cin>>x;
+            sum+=x;
+            x = log2(x);
+            arr[x]++;
+        }
+        if(sum < n){
+            cout<<-1<<endl;
+            continue;
+        }
+        vector<int>ndd;
+        for(long long i = 0 ; i < 60 ; i++){
+            if(( 1ll << i )& n)
+                ndd.push_back(i);
+        }
+        sort(ndd.rbegin() , ndd.rend());
+        int ans = 0;
+        while(ndd.size()){
+            int curr = ndd.back();
+            ndd.pop_back();
+            for(int i = 0;  i< curr ; i++){
+                arr[i+1] += arr[i]/2;
+                arr[i]%=2;
+            }
+            int tmp=-1;
+            for(int i=curr; i<60; i++)
+                if(arr[i])
+                {
+                    arr[i]--;
+                    tmp=i;
+                    break;
+                }
+            while(tmp!=curr)
+            {
+                arr[tmp-1]++;
+                ans++;
+                tmp--;
+            }
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+} 
