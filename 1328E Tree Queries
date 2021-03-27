@@ -1,0 +1,61 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn =2e5 + 	5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 ;
+int n , q , timer , par[mxn] , start_time[mxn] , end_time[mxn] , depth[mxn];
+vector<int>vi[mxn];
+void dfs(int node , int p  , int d){
+	par[node] = p;
+	depth[node] = d;
+	start_time[node] = ++timer;
+	for(auto it : vi[node])
+		if(p != it)
+			dfs(it , node , d + 1);
+	end_time[node] = ++timer;
+}
+bool is_anc(int a , int b){
+	return start_time[a] <= start_time[b] && end_time[a] >= end_time[b];
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n>>q;
+	for(int i = 0 ; i < n - 1;i++){
+		int u , v;
+		cin>>u>>v;
+		vi[u].push_back(v);
+		vi[v].push_back(u);
+	}
+	dfs(1 , 0 , 1);
+	while(q--){
+		int k ;
+		cin>>k;
+		vector<int>v(k);
+		int far;
+		for(int i = 0 ; i < k ; i++){
+			cin>>v[i];
+		}
+		far = v[0];
+		for(int i = 0 ; i < k ; i++){
+			if(depth[v[i]] > depth[far])
+				far = v[i];
+			if(par[v[i]] == 0)
+				continue;
+			else v[i] = par[v[i]];
+		}
+		bool flag = true;
+		for(int i = 0 ; i < k ; i++){
+			if(!is_anc(v[i] , far)){
+				cout<<"NO"<<endl;
+				flag = false;
+				break;
+			}
+		}
+		if(flag)cout<<"YES"<<endl;
+	}
+	return 0;
+}
