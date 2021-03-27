@@ -1,0 +1,60 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int n , m , k;
+vector<int>vi[200005];
+vector<int>special;
+int dis[200005][2];
+bool vis[200005];
+void bfs(int node , bool p){
+	memset(vis,false,sizeof(vis));
+	queue<pair<int,int>>q;
+	q.push({node , 0});
+	vis[node] = 1;
+	while(q.size()){
+		int curr_node = q.front().first , curr_dis = q.front().second;
+		q.pop();
+		for(auto it : vi[curr_node]){
+			if(vis[it])continue;
+			vis[it] = true;
+			dis[it][p] = curr_dis + 1;
+			q.push({it , curr_dis + 1});
+		}
+	}
+}
+bool is_special[200005];
+vector<pair<int,int>>tmp;
+int main() 
+{
+	cin>>n>>m>>k;
+	for(int i = 0; i < k ; i++){
+		int x; cin>>x;
+		special.push_back(x);
+		is_special[x] = true;
+	}
+	bool ok = false;
+	for(int i = 0; i < m; i++){
+		int u , v;
+		cin>>u>>v;
+		if(is_special[u] && is_special[v])
+			ok = true;
+		vi[u].push_back(v);
+		vi[v].push_back(u);
+	}
+	bfs(1 , 0);
+	bfs(n , 1);
+	if(ok)return cout<<dis[n][0],0;
+	for(int i = 0; i< k;  i++){
+		int node = special[i];
+		tmp.push_back({dis[node][0] , dis[node][1]});
+	}
+	sort(tmp.begin(),tmp.end());
+	for(int i = k - 2; i >= 0 ;i--)
+		tmp[i].second = max(tmp[i].second , tmp[i+1].second);
+	int ans = 0;
+	for(int i =0 ; i< k - 1; i++){
+		ans = max(ans ,tmp[i].first +tmp[i + 1].second +1 );
+	}
+	cout<<min(ans , dis[n][0]);
+    return 0;
+} 
+//We need to find the lowest distance between two  special fields
