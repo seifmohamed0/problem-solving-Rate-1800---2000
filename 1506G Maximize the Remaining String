@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+#include <ext/numeric>
+
+#include<ext/pb_ds/tree_policy.hpp>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/rope>
+using namespace std;
+using namespace __gnu_pbds;
+using namespace __gnu_cxx;
+template<class T> using Tree = tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update>;
+
+using namespace std;
+#define go ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define ll long long
+typedef vector<vector<int>>vvi;
+typedef complex<long double>Point;
+const double Pi = acos(-1.0) , eps = 1e-8;
+#define X real()
+#define Y imag()
+#define Angle(v) (atan2((v).Y , (v).X))
+#define Length(v) ((long double)hypot((v).Y , (v).X))
+#define Lengthsqr(v) (dot((v) , (v)))
+const int mxn = 2e5+ 5 , mod = 1e9 + 7, MOD = 1e9 + 7 , mod2 = 998244353;
+int distinct(string s ){
+	sort(s.begin() , s.end());
+	return unique(s.begin() , s.end()) - s.begin();
+}
+string filter(string &s , char c){
+	string ret = "";
+	bool found = false;
+	for(int i = 0; i <(int)s.size() ; i++){
+		if(found && s[i] != c)
+			ret += s[i];
+		else if(!found && s[i] == c)
+			found =true;
+	}
+	return ret;
+}
+void bingo(){
+	string s;
+	cin>>s;
+	string out = "";
+	unordered_set<char>st;
+	for(int i =0 ; i <(int)s.size() ; i++){
+		st.insert(s[i]);
+	}
+	int rem = distinct(s);
+	while(rem){
+		char mx = 'a';
+		for(auto it : st){
+			if(distinct(filter(s , it)) == rem - 1){
+				mx = max(mx , it);
+			}
+		}
+		out += mx;
+		st.erase(mx);
+		rem--;
+		s = filter(s , mx);
+	}
+	cout<<out<<'\n';
+}
+int main() {
+	go
+#ifdef LOCAL
+	freopen("input.in", "rt", stdin);
+//	freopen("output.out", "wt", stdout);
+#endif
+	//freopen("card.in", "rt", stdin);
+	int t = 1;
+	cin>>t;
+	while(t--){
+		bingo();
+	}
+	return 0;
+}
