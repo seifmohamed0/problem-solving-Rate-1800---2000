@@ -1,0 +1,33 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+const int maxn = 300005;
+vector<int>vi[maxn];
+map<vector<int> , vector<int>>mp;
+int ans[maxn];
+int main(){
+	int n , m; 
+	cin>>n>>m;
+	for(int i = 0, u , v; i < m ; i++){
+		scanf("%d%d" , &u , &v);
+		vi[u].push_back(v);
+		vi[v].push_back(u);
+	}
+	for(int i = 1; i <= n ; i++)
+		if(!vi[i].size())
+			return cout<<-1,0;
+	for(int i= 1 ; i <= n ; i++){
+		sort(vi[i].begin() , vi[i].end());
+		mp[vi[i]].push_back(i);
+	}
+	if(mp.size() != 3)return cout<<-1,0;
+	int cnt = 0;
+	for(auto it : mp){
+		cnt++;
+		for(auto it2 :it.second)
+			ans[it2] = cnt;
+	}
+	for(int i = 1; i <= n ; i++)
+		cout<<ans[i]<<" ";
+		
+	return 0;
+}  
