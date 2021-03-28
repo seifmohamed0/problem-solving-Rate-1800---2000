@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+int n , m;
+vector<vector<char>>vi;
+int xd[] = {0,1};
+int yd[] = {1,0};
+unordered_map<int,unordered_map<int,bool>>mp;
+bool dfs(int x , int y){
+	if(x==n-1 && y == m-1)return true;
+	if(x || y)
+		mp[x][y] = true;
+	for(int i =0 ; i < 2 ; i++){
+		int nx = x + xd[i] , ny = y + yd[i];
+		if(nx <0 || ny < 0 || nx >= n || ny >= m || vi[nx][ny] == '#' || mp[nx][ny])
+			continue; 
+		if(dfs(nx,ny))
+			return true;
+	}
+	return false;
+}
+int main() 
+{
+	cin>>n>>m;
+	vi = vector<vector<char>>(n,vector<char>(m));
+	for(int i = 0 ;i < n ; i++){
+		for(int j = 0; j < m ;j++)
+			cin>>vi[i][j];
+	}
+	if(!dfs(0,0))return cout<<0,0;
+	if(!dfs(0,0))return cout<<1,0;
+	cout<<2;
+	return 0;
+}  
+ 
