@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+#define ll long long 
+using namespace std;
+const int  mxn = 4e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+ll n , p , w ,d;
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n>>p>>w>>d;
+	for(int i = 0; i <= w ; i++){
+		ll curr = i * d;
+		ll tot = p - curr;
+		if(tot >= 0 && tot % w == 0 && i + tot / w <= n)
+			return cout<<tot/w<<" "<<i<<" "<<n-i-tot/w,0;
+	}
+	cout<<-1;
+	return 0;	
+}
+ 
