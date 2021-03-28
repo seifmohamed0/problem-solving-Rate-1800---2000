@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int>x,y,z;
+multiset<int>xx;
+map<int,multiset<int>>yy;
+map<pair<int,int> , multiset<int>>zz;
+bool vis[100005];
+map<pair<int,pair<int,int>>,int>pl;
+int main() {
+	int n ;
+	cin>>n;
+	x.resize(n);y.resize(n);z.resize(n);
+	for(int i = 0; i < n; i++){
+		cin>>x[i]>>y[i]>>z[i];
+		xx.insert(x[i]);
+		yy[x[i]].insert(y[i]);
+		zz[{x[i],y[i]}].insert(z[i]);
+		pl[{x[i] , {y[i] , z[i]}}] = i;
+	}
+	for(int i = 0; i< n; i++){
+		if(vis[i])continue;
+		vis[i] = true;
+		// erase curr points
+		xx.erase(xx.find(x[i]));
+		yy[x[i]].erase(yy[x[i]].find(y[i]));
+		zz[{x[i] , y[i]}].erase(zz[{x[i] , y[i]}].find(z[i]));
+
+		// find the second point
+		auto it = xx.upper_bound(x[i]);
+		if(it!=xx.begin())
+			it--;
+		int sx = *it;
+		auto it2 = yy[sx].upper_bound(y[i]);
+		if(it2!=yy[sx].begin())
+			it2--;
+		int sy = *it2;
+		auto it3 = zz[{sx,sy}].upper_bound(z[i]);
+		if(it3!=zz[{sx,sy}].begin())
+			it3--;
+		int sz = *it3;
+
+		// remove second point
+		xx.erase(xx.find(sx));
+		yy[sx].erase(yy[sx].find(sy));
+		zz[{sx , sy}].erase(zz[{sx , sy}].find(sz));
+
+		int indx = pl[{sx , {sy , sz}}];
+		vis[indx] = true;
+		cout<<i + 1 <<" "<<indx+1<<endl;
+	}
+    return 0;
+}
