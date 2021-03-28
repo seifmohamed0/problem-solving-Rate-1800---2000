@@ -1,0 +1,49 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+int n , arr[200005] ;
+vector<int>vi[200005];
+int ans[200005];
+bool vis[200005];
+void sol(bool state){
+	vector<int>dis(n);
+	queue<int>q;
+	for(int i = 0 ; i < n ; i++){
+		if((arr[i] & 1) == state){
+			q.push(i);
+			vis[i] = true;
+		}else
+			vis[i] = false;
+	}
+	while(q.size()){
+		int node = q.front() ;
+		q.pop();
+		for(auto it : vi[node]){
+			if(vis[it])continue;
+			vis[it] = true;
+			dis[it] = dis[node] + 1;
+			if((arr[it] &1 )!= state)
+				ans[it] = dis[it];
+			q.push(it);
+		}
+	}	
+}
+int main(){
+	cin>>n;
+	for(int i = 0; i < n ; i++){
+		cin>>arr[i];
+		if(i - arr[i] >= 0)
+			vi[i - arr[i]].push_back(i);
+		if(i + arr[i] < n)
+			vi[i + arr[i]].push_back(i);
+	}
+	sol(0);
+/*	for(int i = 0; i < n ; i++)
+		cout<<(ans[i] ? ans[i] : -1)<<" ";
+	cout<<endl; 
+	*/
+	sol(1);
+	for(int i = 0; i < n; i++)
+		cout<<(ans[i] ? ans[i] : -1)<<" ";
+	return 0;
+}  
+ 
