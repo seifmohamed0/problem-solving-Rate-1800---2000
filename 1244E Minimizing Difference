@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+#define ll long long 
+using namespace std;
+const int  mxn = 2e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+vector<int>vi;
+ll n , k;
+bool valid(int diff)
+{
+    ll cntmn = 0, cntmx = 0, i = 0, j = n - 1, mn = vi[0], mx = vi[n - 1];
+    ll ret = 0;
+    while(mx - mn > diff){
+        while(i < n && vi[i] == mn){
+            ++cntmn;++i;
+        }
+        while(j >= 0 && vi[j] == mx){
+            ++cntmx;--j;
+        }
+        if (cntmn < cntmx){
+            int d = min(vi[i] - mn, mx - mn - diff);
+            ret +=  cntmn * d;
+            mn += d;
+        }
+        else{
+            int d = min(mx - vi[j], mx - mn - diff);
+            mx -= d;
+            ret +=  d * cntmx;
+        }
+    }
+    return ret <= k;
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n>>k;
+	vi.resize(n);
+	for(auto &it : vi)	
+		cin>>it;
+	sort(vi.begin() , vi.end());
+	ll st = 0 , en = vi[n - 1] - vi[0] , mid , ans = vi[n - 1] - vi[0];
+	while(en >= st){
+		mid = (st + en) / 2 ;
+		if(valid(mid))
+		{
+			ans = mid ;
+			en = mid - 1;
+		}
+		else{
+			st = mid + 1;
+		}
+	}
+	cout<<ans;
+	return 0;
+}
