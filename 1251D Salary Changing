@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+using namespace std;
+vector<pair<long long ,long long >>vi;
+long long n , s;
+bool valid(long long num){
+	long long sum = 0;
+	for(int i = 0; i < n ; i++){
+		sum+=vi[i].first;
+	}
+	int cnt = 0;
+	for(int i = n-1; i >= 0; i--){
+		if(num <= vi[i].second ){
+			sum+=max(0ll,num-vi[i].first);
+			cnt++;
+		}
+		if(cnt > n/2)break;
+	}
+	return sum <= s && cnt > n/2;
+}
+int main() 
+{		
+	int t; 
+	cin>>t;
+	while(t--){
+		vi.clear();
+		cin>>n>>s;
+		for(int i = 0; i < n ; i++){
+			long long a , b;
+			cin>>a>>b;
+			vi.push_back({a,b});
+		}
+		sort(vi.begin(),vi.end());
+		long long st = vi[n/2].first , en = s , mid , ans = 0;
+		while(en >= st){
+			mid = (st+en)/2;
+			if(valid(mid)){
+				ans = mid;
+				st = mid + 1;
+			}else{
+				en = mid - 1;
+			}
+		}
+		cout<<ans<<endl;
+	}
+    return 0;
+} 
