@@ -1,0 +1,44 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn = 1e6 + 5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 ;
+int Kmp[mxn] , ret;
+void kmp(string s) {
+	Kmp[0] = 0;
+	int sz = s.size();
+	for (int i = 1; i < sz; i++) {
+		int j = Kmp[i - 1];
+		while (j != 0 && s[i] != s[j]) {
+			j = Kmp[j - 1];
+		}
+		Kmp[i] = j + (s[i] == s[j]);
+	}
+	ret = Kmp[sz - 1];
+}
+ 
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();			
+	int n;
+	cin>>n;
+	string out = "";
+	for(int i = 0 ; i < n ; i++){
+		string s ;
+		cin>>s;
+		int siz1 = s.size()  , siz2 = out.size();	
+		if(!i)
+			out = s;
+		else{
+			kmp(s + '&' + (siz1 >= siz2 ? out : out.substr(siz2-siz1,siz1)));
+			out += s.substr(ret );
+		}
+	}
+	cout<<out;
+	return 0;
+}
+// a a b a a b a a a
+// 0 1 0 1 2 3 
