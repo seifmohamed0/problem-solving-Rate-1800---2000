@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 	
+#define ll long long 
+using namespace std;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+const int  mxn = 3e5+5 , N = 8e1 + 5 , mod = 1e9 + 7 , inf = 0x3f , mod2 = 999119999 , mod3 = 1000992299 , pow1 = 31 , pow2 = 53 ;
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	ll n ;
+	string s;
+	cin>>n>>s;
+	ll ans = (n * ( n - 1 )) / 2;
+	for(int i = 0;i < n ; i++)
+	{
+		int j =i;
+		while(j < n && s[i] == s[j])
+			j++;
+		if(i)
+			ans -= (j - i);
+		if(j < n)
+			ans -= (j - i - 1);
+		i = j - 1;
+	}
+	cout<<ans;
+	return 0;
+}
+
+	
