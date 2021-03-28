@@ -1,0 +1,65 @@
+#include <bits/stdc++.h> 
+#define ll long long 
+using namespace std;
+const int  mxn = 2e5 + 5 , N = 8e1 + 5 , mod = 1e9 + 7;
+void sfsf(){
+	ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+}
+int n ; 
+vector<int>vi;
+vector<int>factors;
+ll calc(int l , int r){
+	int median = (l + r) / 2;
+	ll ret = 0;
+	int cnt = 0;
+	for(int i=  l ; i <= median ; i++){
+		if(cnt){
+			ret += cnt * (vi[i] - vi[i - 1]);
+		}
+		cnt++;
+	}
+	cnt = 0;
+	for(int i = r ; i >= median ; i--){
+		if(cnt)
+			ret += cnt * (vi[i + 1] - vi[i]);
+		cnt++;
+	}
+	return ret;
+}
+ll solve(int k){
+	ll ret = 0;
+	for(int i = 0 ; i < (int)vi.size() ; ){
+		ret += calc(i , i + k - 1);
+		i += k;
+	}
+	return ret;
+}
+int main(){
+	//freopen("a.txt","rt" , stdin);
+	//freopen("b.txt","w" , stdout);
+	sfsf();
+	cin>>n;
+	for(int i = 0; i < n ; i++){
+		bool x ;cin>>x;
+		if(x){
+			vi.push_back(i);
+		}
+	}
+	if(vi.size() == 1)
+		return cout<<-1,0;
+	if(!vi.size())return cout<<0,0;
+	int k = vi.size();
+	for(int i = 2 ; i * i <= k ; i++){
+		while(k % i == 0){
+			factors.push_back(i);
+			k/=i;
+		}
+	}
+	if(k > 1)factors.push_back(k);
+	ll ans = 1e18;
+	for(int i = 0; i < (int)factors.size() ; i++){
+		ans = min(ans , solve(factors[i]));
+	}
+	cout<<ans;
+	return 0;
+}
